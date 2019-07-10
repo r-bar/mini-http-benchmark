@@ -11,8 +11,34 @@
 
 ## Latest Results
 ```
+####################################
+Starting test for falcon_app
+####################################
+Cmd: /bin/sh -c gunicorn --worker-connections 1000 --bind 0.0.0.0:80 main:app
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking falcon_app (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+apr_socket_recv: Connection reset by peer (104)
+Total of 9788 requests completed
+Test failed...
+[2019-07-10 05:45:00 +0000] [1] [INFO] Starting gunicorn 19.9.0
+[2019-07-10 05:45:00 +0000] [1] [INFO] Listening at: http://0.0.0.0:80 (1)
+[2019-07-10 05:45:00 +0000] [1] [INFO] Using worker: sync
+[2019-07-10 05:45:00 +0000] [7] [INFO] Booting worker with pid: 7
+####################################
 Starting test for falcon_gevent_app
-1abb6521008b43c0ee6db5d256f8c02174bcd7d78473728e6c2bbbf9e8b21ae8
+####################################
 Cmd: /bin/sh -c gunicorn --worker-class eventlet --worker-connections 1000 --bind 0.0.0.0:80 main:app
 This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -40,37 +66,36 @@ Document Path:          /
 Document Length:        27 bytes
 
 Concurrency Level:      1000
-Time taken for tests:   3.538 seconds
+Time taken for tests:   3.516 seconds
 Complete requests:      10000
 Failed requests:        0
 Total transferred:      1790000 bytes
 HTML transferred:       270000 bytes
-Requests per second:    2826.38 [#/sec] (mean)
-Time per request:       353.809 [ms] (mean)
-Time per request:       0.354 [ms] (mean, across all concurrent requests)
-Transfer rate:          494.07 [Kbytes/sec] received
+Requests per second:    2843.90 [#/sec] (mean)
+Time per request:       351.629 [ms] (mean)
+Time per request:       0.352 [ms] (mean, across all concurrent requests)
+Transfer rate:          497.13 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0  198 425.3      0    3048
-Processing:     9   88 170.6     48    1727
-Waiting:        1   88 170.6     48    1727
-Total:         37  286 505.4     50    3103
+Connect:        0  208 508.0      0    3048
+Processing:    10   79 162.9     44    1723
+Waiting:        1   79 162.9     43    1723
+Total:         21  287 568.3     45    3275
 
 Percentage of the requests served within a certain time (ms)
-  50%     50
-  66%     64
-  75%    111
-  80%    249
+  50%     45
+  66%     55
+  75%     86
+  80%    240
   90%   1075
-  95%   1272
-  98%   1890
-  99%   2707
- 100%   3103 (longest request)
-88a30c0222731544e7198fea816c468ba0359607fad71aed760a3fe2f25b3cd3
-falcon_gevent_app
+  95%   1103
+  98%   2717
+  99%   3095
+ 100%   3275 (longest request)
+####################################
 Starting test for fastapi_app
-e02aeacf4aa236d3c03c78bbff8df87241d8ca4fa739bb04d5baa6edcc184b81
+####################################
 Cmd: /bin/sh -c gunicorn --worker-connections 1000 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:80 main:app
 This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -98,33 +123,31 @@ Document Path:          /
 Document Length:        26 bytes
 
 Concurrency Level:      1000
-Time taken for tests:   3.699 seconds
+Time taken for tests:   14.914 seconds
 Complete requests:      10000
 Failed requests:        0
 Total transferred:      1510000 bytes
 HTML transferred:       260000 bytes
-Requests per second:    2703.37 [#/sec] (mean)
-Time per request:       369.909 [ms] (mean)
-Time per request:       0.370 [ms] (mean, across all concurrent requests)
-Transfer rate:          398.64 [Kbytes/sec] received
+Requests per second:    670.52 [#/sec] (mean)
+Time per request:       1491.377 [ms] (mean)
+Time per request:       1.491 [ms] (mean, across all concurrent requests)
+Transfer rate:          98.88 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0  154 362.9      2    1042
-Processing:    26  162 179.9    131    1905
-Waiting:        2  147 177.7    118    1884
-Total:         26  316 488.1    135    2947
+Connect:        0   99 302.3      2    1059
+Processing:    22  375 1306.2    147   13857
+Waiting:        2  359 1308.0    128   13856
+Total:         22  475 1502.8    149   14895
 
 Percentage of the requests served within a certain time (ms)
-  50%    135
-  66%    164
-  75%    186
-  80%    211
-  90%   1239
-  95%   1379
-  98%   1639
-  99%   2098
- 100%   2947 (longest request)
-dc2605e3a9d8f71e5335525a7d2951496f1435806da0acbf1dfa9ccb64b809f7
-fastapi_app
+  50%    149
+  66%    165
+  75%    180
+  80%    183
+  90%    258
+  95%   2071
+  98%   4597
+  99%   7994
+ 100%  14895 (longest request)
 ```

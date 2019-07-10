@@ -4,8 +4,8 @@ BUILD_DIR=build
 
 cleanup() {
   for TEST in *_app; do
-    docker rm -f $TEST
-    docker network rm $TEST
+    docker rm -f $TEST > /dev/null 2>&1
+    docker network rm $TEST > /dev/null 2>&1
   done
 }
 trap cleanup EXIT
@@ -18,8 +18,11 @@ build() {
 
 run_test() {
   NAME=$1
+  echo "####################################"
   echo Starting test for $NAME
-  docker network create $NAME
+  echo "####################################"
+
+  docker network create $NAME > /dev/null 2>&1
   CONTAINER=`docker run -d --net $NAME --name $NAME $NAME`
   if [ -z $CONTAINER ]; then
     exit 1
@@ -33,9 +36,10 @@ run_test() {
     docker logs $CONTAINER
     #exit 1
   fi
-  docker rm -f $CONTAINER
-  docker network rm $NAME
+  docker rm -f $CONTAINER > /dev/null 2>&1
+  docker network rm $NAME > /dev/null 2>&1
 }
+
 
 for TEST in *_app; do
   build $TEST
