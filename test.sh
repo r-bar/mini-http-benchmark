@@ -5,6 +5,7 @@ BUILD_DIR=build
 cleanup() {
   for TEST in *_app; do
     docker rm -f $TEST
+    docker network rm $TEST
   done
 }
 trap cleanup EXIT
@@ -18,19 +19,22 @@ build() {
 run_test() {
   NAME=$1
   echo Starting test for $NAME
-  CONTAINER=`docker run -d -p 8000:80 --name $NAME $NAME`
+  docker network create $NAME
+  CONTAINER=`docker run -d --net $NAME --name $NAME $NAME`
   if [ -z $CONTAINER ]; then
     exit 1
   fi
   echo Cmd: `docker inspect $CONTAINER | jq -r '.[0].Config.Cmd | join(" ")'`
   sleep 1
-  ab -c 1000 -n 10000 http://localhost:8000/
+  docker run --rm --net $NAME --link $NAME httpd ab -c 1000 -n 10000 http://$NAME/
+  #docker run --rm --net $NAME --link $NAME 1vlad/wrk2-docker -c 1000 -d 10 -R 10000 -t 4 -L http://$NAME/
   if [ $? -gt 0 ]; then
     echo Test failed...
     docker logs $CONTAINER
     #exit 1
   fi
   docker rm -f $CONTAINER
+  docker network rm $NAME
 }
 
 for TEST in *_app; do
